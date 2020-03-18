@@ -1,26 +1,23 @@
 Question 1:
 
+
 vi newer.sh
 _____________________________________________________
-#creating the script w/ title and entering edit mode
-_____________________________________________________
+
 #!/bin/bash
 ls -lt
 ls -1tr * | tail -1
 _____________________________________________________
-#using two list functions, first for a date modified ordered list, second for the newest file
-_____________________________________________________
+
 ubuntu@ip-172-31-18-210:~$ touch -t 202003181925 foo
 ubuntu@ip-172-31-18-210:~$ touch -t 202003181926 goo
 ubuntu@ip-172-31-18-210:~$ touch -t 202003181927 hoo
 _____________________________________________________
-#creating the dummy files, the dates & times were added to make hoo the most recently created file
-_____________________________________________________
+
 ubuntu@ip-172-31-18-210:~$ ls
 Program  con-sh-exe.sh  foo  fruits.sh  goo  hoo  monkey.sh  newer.sh  sorting.sh
 _____________________________________________________
-#checking to make sure they had been successfully created
-_____________________________________________________
+
 ubuntu@ip-172-31-18-210:~$ ./newer.sh
 total 8
 -rw-rw-r-- 1 ubuntu ubuntu  0 Mar 17 19:27 hoo
@@ -37,11 +34,14 @@ _____________________________________________________
 #the script successfully executed two commands, one to list the files by date modified and the next to return the newest file which is hoo
 _____________________________________________________
 
+
+
+
 Question 2:
 
+
+
 ubuntu@ip-172-31-18-210:~$ vi test_me.sh
-_____________________________________________________
-#creating the script w/ title and entering edit mode
 _____________________________________________________
 
 #!/bin/bash
@@ -52,12 +52,41 @@ else
 echo "This is a TEST"
 fi
 _____________________________________________________
-#created a script using (if,then,else,fi) that checked if the proceeding string was null, if it was "then "this is NOT a test"" appears. 
-otherwise, "This is a TEST" will appear.
-_____________________________________________________
 
 ubuntu@ip-172-31-18-210:~$ ./test_me.sh
 This is NOT a test
 ubuntu@ip-172-31-18-210:~$ ./test_me.sh foo
 This is a TEST
+
+_____________________________________________________
+
+
+
+Question 3E
+
+_____________________
+vi time-signal.sh
+_____________________
+
+#!/bin/bash
+# save as time-signal.sh
+# gives a time signal every hour when connected to cron
+time=$(date +%I)
+count=0
+while test $count -lt "$time"; do
+  echo -e "\a"
+  sleep 1 # sleep for one second
+  count=$((count+1))
+done
+sleep 3
+minutes=$(date +%M)
+if test "$minutes" -gt 15 && test "$minutes" -lt 30; then
+        echo -e "\a"
+elif test "$minutes" -gt 30 && test "$minutes" -lt 45; then
+        echo -e "\a\a"
+elif test "$minutes" -gt 45 && test "$minutes" -lt 60; then
+        echo -e "\a\a\a"
+else
+        echo "still too early to beep"
+fi
 
